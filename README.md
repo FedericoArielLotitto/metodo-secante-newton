@@ -1,0 +1,1 @@
+# metodo-secante-newton
