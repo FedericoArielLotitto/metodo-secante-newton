@@ -8,7 +8,7 @@ La condición de parada de este ejercicio es el epsilon (#ver de agregar la cant
     cómo calcular el orden de convergencia en este caso)
 
 */
-
+const raizEquisAlCuboMenosTres = Math.pow(3, 1/3);
 const funcionAEvaluar = x => Math.pow(x, 3) - 3; 
 const derivadaPrimeraEquisCuboMenosTres = x => 3*x
 const derivadaSegundaEquisCuboMenosTres = 3;
@@ -26,7 +26,6 @@ function funcionSecante(funcion, primerValorAnterior, segundoValorAnterior) {
 }
 
 function errorRelativo(valorAproximado) {
-    const raizEquisAlCuboMenosTres = Math.pow(3, 1/3);
     return Math.abs((raizEquisAlCuboMenosTres - valorAproximado)) / raizEquisAlCuboMenosTres;
 }
 
@@ -37,17 +36,13 @@ function errorAbsoluto(valorAproximado) {
 function metodoSecante(primerValorAnterior, segundoValorAnterior, limitePasos, epsilon) {
     let raizAproximada = funcionSecante(funcionAEvaluar, primerValorAnterior, segundoValorAnterior);
     let cantidadPasos = 1;
-    console.log(cantidadPasos, ": ", raizAproximada);
     let errorAlcanzado = errorAbsoluto(raizAproximada);
-    console.log("Error primero: ", errorAlcanzado);
 
     while(cantidadPasos > limitePasos || errorAlcanzado > epsilon) {
         let nuevoPrimerValorAnterior = raizAproximada;
         let nuevoSegundoValorAnterior = primerValorAnterior;
         raizAproximada = funcionSecante(funcionAEvaluar, nuevoPrimerValorAnterior, nuevoSegundoValorAnterior);
         errorAlcanzado = errorAbsoluto(raizAproximada);
-        console.log("Error alcanzado: ", errorAlcanzado);
-        console.log("Raíz: ", raizAproximada);
         cantidadPasos += 1;
     }
     
@@ -59,4 +54,10 @@ function metodoSecante(primerValorAnterior, segundoValorAnterior, limitePasos, e
 }
 
 
-metodoSecante(2, 1, 25, 0.0001);
+let resultado = metodoSecante(2, 1, 25, 0.0001);
+
+console.log("-----------------------------------------------------");
+console.log("| RAÍZ               | ERROR                   | NÚMERO DE PASOS                |");
+console.log(`| ${resultado.raizAproximada} | ${resultado.errorAlcanzado} | ${resultado.cantidadPasos}                              |`);
+console.log("-----------------------------------------------------");
+
