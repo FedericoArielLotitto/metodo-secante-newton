@@ -10,11 +10,41 @@ La condición de parada de este ejercicio es el epsilon (#ver de agregar la cant
 */
 const raizEquisAlCuboMenosTres = Math.pow(3, 1/3);
 const funcionAEvaluar = x => Math.pow(x, 3) - 3; 
-const derivadaPrimeraEquisCuboMenosTres = x => 3*x
+const derivadaPrimeraEquisCuboMenosTres = x => 3* Math.pow(x, 2);
 const derivadaSegundaEquisCuboMenosTres = 3;
 
-function newton() {
-    return;
+function errorRelativo(valorAproximado) {
+    return Math.abs((raizEquisAlCuboMenosTres - valorAproximado)) / raizEquisAlCuboMenosTres;
+}
+
+function errorAbsoluto(valorAproximado) {
+    return Math.abs(Math.pow(3, 1/3) - valorAproximado);;
+}
+
+function funcionNewton(funcion, primeraDerivadaFuncion, primeraAproximacion) {
+    return primeraAproximacion - (funcion(primeraAproximacion) / primeraDerivadaFuncion(primeraAproximacion));
+}
+
+function metodoNewton(primerValor, limitePasos, epsilon) {
+    let raizAproximada = funcionNewton(funcionAEvaluar,derivadaPrimeraEquisCuboMenosTres, primerValor);
+    let errorAlcanzado = errorRelativo(raizAproximada);
+    let cantidadPasos = 0; 
+
+    while(cantidadPasos < limitePasos) {
+        let nuevaRaizAproximada = funcionNewton(funcionAEvaluar, derivadaPrimeraEquisCuboMenosTres, raizAproximada);
+        raizAproximada = nuevaRaizAproximada;
+        errorAlcanzado = errorRelativo(raizAproximada);
+        cantidadPasos += 1;
+        if(errorAlcanzado <= epsilon) {
+            break;
+        }
+    }
+
+    return {
+        raizAproximada: raizAproximada,
+        errorAlcanzado: errorAlcanzado,
+        cantidadPasos: cantidadPasos
+    }
 }
 
 function funcionSecante(funcion, primerValorAnterior, segundoValorAnterior) {
@@ -25,28 +55,23 @@ function funcionSecante(funcion, primerValorAnterior, segundoValorAnterior) {
     return primerValorAnterior - (numerador / denominador);
 }
 
-function errorRelativo(valorAproximado) {
-    return Math.abs((raizEquisAlCuboMenosTres - valorAproximado)) / raizEquisAlCuboMenosTres;
-}
-
-function errorAbsoluto(valorAproximado) {
-    return Math.abs(Math.pow(3, 1/3) - valorAproximado);;
-}
-
 function metodoSecante(primerValorAnterior, segundoValorAnterior, limitePasos, epsilon) {
     let raizAproximada = funcionSecante(funcionAEvaluar, primerValorAnterior, segundoValorAnterior);
     let cantidadPasos = 1;
     let errorAlcanzado = errorAbsoluto(raizAproximada);
 
-    while(cantidadPasos > limitePasos || errorAlcanzado > epsilon) {
+    while(cantidadPasos < limitePasos) {
         let nuevoPrimerValorAnterior = raizAproximada;
         let nuevoSegundoValorAnterior = primerValorAnterior;
         raizAproximada = funcionSecante(funcionAEvaluar, nuevoPrimerValorAnterior, nuevoSegundoValorAnterior);
         errorAlcanzado = errorAbsoluto(raizAproximada);
         cantidadPasos += 1;
+        if (errorAlcanzado <= epsilon) {
+            break;
+        }
     }
     
-    return  { 
+    return { 
         raizAproximada: raizAproximada,
         errorAlcanzado: errorAlcanzado,
         cantidadPasos: cantidadPasos
@@ -54,10 +79,12 @@ function metodoSecante(primerValorAnterior, segundoValorAnterior, limitePasos, e
 }
 
 
-let resultado = metodoSecante(2, 1, 25, 0.0001);
+let resultado = metodoSecante(2, 1, 50, 0.000000000000000000000000000000000000001);
+let resultadoNewton = metodoNewton(1.2, 30, 0.0000000000000000000000000000001);
+
+console.log(resultadoNewton);
 
 console.log("---------------------------------------------------------------------------------");
 console.log("| RAÍZ               | ERROR                   | NÚMERO DE PASOS                |");
 console.log(`| ${resultado.raizAproximada} | ${resultado.errorAlcanzado} | ${resultado.cantidadPasos}                              |`);
 console.log("---------------------------------------------------------------------------------");
-
