@@ -56,8 +56,8 @@ function metodoSecante(primerValorAnterior, segundoValorAnterior, limitePasos, e
 
 let resultado = metodoSecante(2, 1, 25, 0.0001);
 
-console.log("-----------------------------------------------------");
+console.log("---------------------------------------------------------------------------------");
 console.log("| RAÍZ               | ERROR                   | NÚMERO DE PASOS                |");
 console.log(`| ${resultado.raizAproximada} | ${resultado.errorAlcanzado} | ${resultado.cantidadPasos}                              |`);
-console.log("-----------------------------------------------------");
+console.log("---------------------------------------------------------------------------------");
 
