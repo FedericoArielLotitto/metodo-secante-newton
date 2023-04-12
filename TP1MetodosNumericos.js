@@ -94,9 +94,9 @@ function combinatoriaSecanteNewton(limiteInferior, limiteSuperior, limitePasos, 
             raizAproximada = nuevaRaizAproximada;
             errorAlcanzado = errorAbsoluto(raizAproximada);
             cantidadPasos += 1;
-            if (errorAlcanzado <= epsilon) {
-                break;
-            }
+            // if (errorAlcanzado <= epsilon) {
+            //     break;
+            // }
             fueAplicadaNewton = true;
             resultado.raizAproximada = raizAproximada;
             resultado.errorAlcanzado = errorAlcanzado;
@@ -109,9 +109,9 @@ function combinatoriaSecanteNewton(limiteInferior, limiteSuperior, limitePasos, 
             nuevoSegundoValorAnterior = aux;
             errorAlcanzado = errorAbsoluto(raizAproximada);
             cantidadPasos += 1;
-            if (errorAlcanzado <= epsilon) {
-                break;
-            }
+            // if (errorAlcanzado <= epsilon) {
+            //     break;
+            // }
             resultado.raizAproximada = raizAproximada;
             resultado.errorAlcanzado = errorAlcanzado;
             resultado.cantidadPasos = cantidadPasos;
@@ -131,4 +131,4 @@ function combinatoriaSecanteNewton(limiteInferior, limiteSuperior, limitePasos, 
 // console.log("| RAÍZ               | ERROR                   | NÚMERO DE PASOS                |");
 // console.log(`| ${resultado.raizAproximada} | ${resultado.errorAlcanzado} | ${resultado.cantidadPasos}                              |`);
 // console.log("---------------------------------------------------------------------------------");
-combinatoriaSecanteNewton(1, 2, 25, 0.000000000000000001);
+combinatoriaSecanteNewton(1, 2, 16, 0.000000000000000001);
